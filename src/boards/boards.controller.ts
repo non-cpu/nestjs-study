@@ -12,6 +12,7 @@ import {
 import { BoardsService } from './boards.service';
 import { CreateBoardDto } from './dto/create-board.dto';
 import { Board, BoardStatus } from './entity/board.entity';
+import { EnumValidationPipe } from './pipe/enum-validation.pipe';
 
 @Controller('boards')
 export class BoardsController {
@@ -36,7 +37,7 @@ export class BoardsController {
   @Patch(':id/status')
   updateBoardStatus(
     @Param('id') id: number,
-    @Body('status') status: BoardStatus,
+    @Body('status', new EnumValidationPipe(BoardStatus)) status: BoardStatus,
   ) {
     return this.boardsService.updateBoardStatus(id, status);
   }
